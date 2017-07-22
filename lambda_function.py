@@ -65,5 +65,7 @@ def lambda_handler(event, context):
 
     # Valid event, and one we are interested in
     cluster = event["detail"]["clusterArn"]
-    adjust_service_desired_count(ecs_client(), cluster, service)
+    serviceItems = service.split(',')
+    for item in serviceItems[:]:
+      adjust_service_desired_count(ecs_client(), cluster, item)
     print("DONE")
