@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
 A Lambda Function to set the desired count of running tasks
-in a service based upon environment variables
-
+in a service based on a cluster's containter instances.
+Designed to be triggered by a CloudWatch Event rule.
 """
 from __future__ import print_function
 
@@ -55,9 +55,9 @@ def lambda_handler(event, context):
     if not service:
         raise ValueError("Need to set `ECS_SERVICE_ARN` env var to serviceArn(s).")
         
-    cluster = os.getenv('ECS_CLUSTER_ARN')
+    cluster = os.getenv('ECS_CLUSTER_NAME')
     if not cluster:
-        raise ValueError("Need to set `ECS_CLUSTER_ARN` env var to clusterArn.")
+        raise ValueError("Need to set `ECS_CLUSTER_NAME` env var to cluster name.")
         
     desired_count = int(os.getenv('DESIRED_COUNT'))
     #if not desired_count:
